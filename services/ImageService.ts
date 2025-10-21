@@ -1,6 +1,8 @@
 import * as FileSystem from "expo-file-system";
 import { supabase } from "../lib/supabase";
 import { decode } from "base64-arraybuffer";
+import { Asset } from 'expo-asset';
+
 
 export const getUserImageSrc = async (imagePath: string) => {
         
@@ -23,50 +25,63 @@ export const getUserImageSrc = async (imagePath: string) => {
     }
 };
 
-export const uploadFile = async (folderName: string, fileUrl:string) => {
-    try{
-
+export const uploadFile = async (folderName: string, fileUrl: string) => {
+    try {
         let IsImage = true;
-        //get folder extionsion from fileUrl
-        let folderExtension = fileUrl.split(".").pop();
-        
-        //Check if folderExtension is image or video
-        if(folderExtension === "png" || folderExtension === "jpg" || folderExtension === "jpeg"){
+        let fileName = "";
+        let actualFileUri = fileUrl;
+
+        if (fileUrl !== "") {
+            // Get file extension from fileUrl
+            let fileExtension = fileUrl.split(".").pop()?.toLowerCase();
+            
+            // Check if fileExtension is image or video
+            if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg") {
+                IsImage = true;
+            } else if (fileExtension === "mp4") {
+                IsImage = false;
+            } else {
+                return { success: false, msg: "Invalid file type" };
+            }
+
+            fileName = getFilePath(folderName, fileExtension);
+        } else {
+            // Handle default image from assets
+            const asset = Asset.fromModule(require("../assets/images/defaultUser.png"));
+            await asset.downloadAsync();
+            
+            actualFileUri = asset.localUri || asset.uri;
+            fileName = getFilePath(folderName, "png");
             IsImage = true;
         }
-        else if (folderExtension === "mp4"){
-            IsImage = false;
-        }
-        else{
-            return {success: false, msg: "Invalid file type"};
-        }
 
-        let fileName = getFilePath(folderName, folderExtension);
-
-        const fileBase64 = await FileSystem.readAsStringAsync(fileUrl, 
-            { encoding: FileSystem.EncodingType.Base64 });
-
-        
-        let imageData = decode(fileBase64);
-
-        const { data, error } = await supabase
-        .storage.from("uploads").upload(fileName, imageData, {
-            cacheControl: "3600",
-            upsert: true,
-            contentType: IsImage ? "image/*" : "video/*",
+        // Read file as base64
+        const fileBase64 = await FileSystem.readAsStringAsync(actualFileUri, {
+            encoding: FileSystem.EncodingType.Base64
         });
 
-        if(error){
-            return {success: false, msg: "Could not upload file"};
+        // Decode base64 to ArrayBuffer
+        let imageData = decode(fileBase64);
+
+        // Upload to Supabase
+        const { data, error } = await supabase.storage
+            .from("uploads")
+            .upload(fileName, imageData, {
+                cacheControl: "3600",
+                upsert: true,
+                contentType: IsImage ? "image/*" : "video/*",
+            });
+
+        if (error) {
+            console.log("Upload error:", error);
+            return { success: false, msg: "Could not upload file" };
         }
 
-        
-        return {success: true, msg: "File uploaded successfully", data: data.path};
+        return { success: true, msg: "File uploaded successfully", data: data.path };
 
-    }
-    catch(error){   
+    } catch (error) {
         console.log("error", error);
-        return {success: false, msg: "Could not upload file"};
+        return { success: false, msg: "Could not upload file" };
     }
 };
 

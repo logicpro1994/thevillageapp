@@ -21,7 +21,7 @@ import Button from "../../components/Button";
 import { supabase } from "../../lib/supabase";
 import { updateUserData } from "../../services/userService";
 import * as ImagePicker from "expo-image-picker";
-import { uploadFile } from "../../services/ImageService";
+import { getUserImageSrc, uploadFile } from "../../services/ImageService";
 
 const EditProfile = () => {
   const { user: currentUser, setUserData } = useAuth();
@@ -90,15 +90,11 @@ const EditProfile = () => {
     } else if (!userData.image) {
       // No image selected, upload default user image to Supabase
       try {
-        // Create a temporary file URI for the default image
-        const defaultImageUri = Image.resolveAssetSource(
-          require("../../assets/images/defaultUser.png")
-        ).uri;
-
-        let imageResult = await uploadFile("profiles", defaultImageUri);
+        let imageResult = await uploadFile("profiles", "");
         if (imageResult.success && imageResult.data) {
           userData.image = imageResult.data as string;
         } else {
+          console.log("imageResult", imageResult);
           // If upload fails, set to empty string and let Avatar handle default
           userData.image = "";
         }

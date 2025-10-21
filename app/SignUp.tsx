@@ -45,6 +45,10 @@ const SignUp = () => {
         },
       });
 
+      if (error) {
+        Alert.alert("Sign Up", error.message);
+        return;
+      }
     } catch (error) {
       console.error(error);
       Alert.alert("Sign Up", "An error occurred while signing up");
