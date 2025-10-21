@@ -1,0 +1,2 @@
+export const supabaseUrl = "https://kirjaopmbnsusdmtrpkl.supabase.co"
+export const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtpcmphb3BtYm5zdXNkbXRycGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjA2ODksImV4cCI6MjA3MDkzNjY4OX0.PBXrjlCACFoyhla5SlfidSa514gBpcxZrxHZ86pKFqA"
