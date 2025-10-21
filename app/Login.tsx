@@ -39,13 +39,17 @@ const Login = () => {
         email,
         password,
       });
+
+      if (error) {
+        Alert.alert("Login", error.message);
+        return;
+      }
     } catch (error) {
       console.error(error);
       Alert.alert("Login", "An error occurred while logging in");
     } finally {
       setLoading(false);
     }
-   
 
     return;
   };
