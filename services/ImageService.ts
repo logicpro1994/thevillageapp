@@ -2,6 +2,14 @@ import * as FileSystem from "expo-file-system";
 import { supabase } from "../lib/supabase";
 import { decode } from "base64-arraybuffer";
 import { Asset } from 'expo-asset';
+import { supabaseUrl } from "../constants";
+
+
+export const getSupabaseFileUrl = (filePath: string): {uri: string} | null => {   
+    if (!filePath) return null;
+
+    return {uri: `${supabaseUrl}/storage/v1/object/public/${filePath}`};
+}
 
 
 export const getUserImageSrc = async (imagePath: string) => {
@@ -38,8 +46,8 @@ export const uploadFile = async (folderName: string, fileUrl: string) => {
             // Check if fileExtension is image or video
             if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg") {
                 IsImage = true;
-            } else if (fileExtension === "mp4") {
-                IsImage = false;
+           // } else if (fileExtension === "mp4") {
+           //     IsImage = false;
             } else {
                 return { success: false, msg: "Invalid file type" };
             }

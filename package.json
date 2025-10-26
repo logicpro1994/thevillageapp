@@ -18,7 +18,8 @@
     "@tanstack/react-query": "^5.90.2",
     "base64-arraybuffer": "^1.0.2",
     "dayjs": "^1.11.18",
-    "expo": "~53.0.22",
+    "expo": "^54.0.15",
+    "expo-av": "~16.0.7",
     "expo-constants": "~17.1.7",
     "expo-crypto": "~14.1.5",
     "expo-file-system": "~18.1.11",
@@ -37,11 +38,13 @@
     "react-native": "0.79.6",
     "react-native-elements": "^3.4.3",
     "react-native-pager-view": "6.7.1",
+    "react-native-pell-rich-editor": "^1.10.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.11.2",
     "react-native-url-polyfill": "^3.0.0",
-    "react-native-web": "~0.20.0"
+    "react-native-web": "~0.20.0",
+    "react-native-webview": "^13.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

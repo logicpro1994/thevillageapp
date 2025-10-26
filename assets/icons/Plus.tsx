@@ -13,7 +13,7 @@ const Plus = (props: IconProps) => (
   >
     <Path
       d="M12 4V20M20 12H4"
-      stroke="currentColor"
+      stroke={props.color || "#141B34"}
       strokeWidth={props.strokeWidth || 1.5}
       strokeLinecap="round"
       strokeLinejoin="round"

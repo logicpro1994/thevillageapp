@@ -13,7 +13,7 @@ const TabBar = ({ alertCount = 0 }: TabBarProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-   const tabs = [
+  const tabs = [
     {
       name: "Home",
       route: "/(main)/Home",
@@ -27,10 +27,10 @@ const TabBar = ({ alertCount = 0 }: TabBarProps) => {
       label: "Community",
     },
     {
-      name: "Posts",
-      route: "/(main)/Posts",
+      name: "NewPost",
+      route: "/(main)/NewPost",
       icon: "plus",
-      label: "Posts",
+      label: "NewPost",
       isSpecial: true,
     },
     {

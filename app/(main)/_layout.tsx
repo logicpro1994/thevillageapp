@@ -14,7 +14,7 @@ export default function MainLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" />
         <Stack.Screen name="Community" />
-        <Stack.Screen name="Posts" />
+        <Stack.Screen name="NewPost" />
         <Stack.Screen name="Experts" />
         <Stack.Screen name="Alerts" />
       </Stack>

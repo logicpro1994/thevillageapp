@@ -51,3 +51,19 @@ npx expo install expo-image-picker
 npx expo install expo-file-system
 
 npm i base64-arraybuffer
+
+Publish commands
+npm install -g eas-cli
+eas login
+eas update --branch staging --message 'Release 1.0'
+
+npx expo install --fix
+rm -rf node_modules
+npm install
+
+---Rich text editor
+npm i react-native-pell-rich-editor
+npm i react-native-webview
+
+npx expo install expo-av
+
